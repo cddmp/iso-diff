@@ -17,6 +17,10 @@ function print_and_exit
 [[ $# < 1 ]] && print_and_exit "Usage: $0 file [device]" 1
 [[ -n "$2" && "$2" =~ ^/dev/ ]] && device="$2"
 
+if [[ ! -f "$iso_orig" ]]; then
+  print_and_exit "$iso_orig does not exist. Exiting." 1
+fi
+
 echo "Creating temporary ISO image from $device (this might take a while)."
 if ! dd if="$device" of="$iso_copy" bs=2M; then
   print_and_exit "Trying to create an image of $device failed. Exiting." 1
